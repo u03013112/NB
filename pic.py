@@ -11,10 +11,10 @@ class Pic:
         im = ImageGrab.grab()
         im.save(filename)
     def captureByAutogui(self,filename):
-        img = pyautogui.screenshot(region=[0,0,1000,1000]) # x,y,w,h
-        img.save(filename)
-        # img = cv2.cvtColor(np.asarray(img),cv2.COLOR_RGB2BGR)
-        
+        im1 = pyautogui.screenshot()
+        im1.save(filename)
+
+
 if __name__=='__main__':
     p = Pic()
     p.capture("pic.png")
