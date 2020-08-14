@@ -35,18 +35,30 @@ class Data:
     def load(self,filename):
         self.data = np.load(filename)
     def show(self):
-        print(self.data)
-        
+        print(self.data)      
+    def balance(self):
+        # 查看是否足够平均
+        a = self.data
+        for i in range(10):
+            ret = np.zeros(10)
+            for j in range(a.shape[0]):
+                # print(int(a[j][i]))
+                ret[int(a[j][i])-1] = ret[int(a[j][i])-1] + 1
+            print(i,":",ret)
 
 
 if __name__=='__main__':
     data = Data()
 
-    for d in range(1,15):
-        date = '2020-08-'+str(d)
-        print(date)
-        data.get(date,date)
-        data.save(date+'.npy')
+    # data.get('2020-07-1','2020-07-31')
+    # data.save('2020-07.npy')
+    # data.balance()
 
-    # data.load('2020-08-13.npy')
-    # data.show()
+    # data.get('2020-08-1','2020-08-14')
+    # data.save('2020-08.npy')
+    # data.balance()
+
+    a = np.load('2020-08.npy')
+    print(a.shape)
+    b = 499+491+454+502+467+539+443+506+544+460
+    print(b)
