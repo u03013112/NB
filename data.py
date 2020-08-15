@@ -1,6 +1,7 @@
 # encoding:utf-8
 import requests
 import numpy as np
+import math
 class Data:
     def get(self,startdate,enddate):
         url = "https://sbmm1.onestalk.com/share/ajax/GetLotteryResults.aspx"
@@ -45,7 +46,39 @@ class Data:
                 # print(int(a[j][i]))
                 ret[int(a[j][i])-1] = ret[int(a[j][i])-1] + 1
             print(i,":",ret)
+    def y(self,y):#对结果进行处理，将一维名次数组，变为二维名次数组
+        ret = np.zeros(100).reshape(-1,10)
+        for i in range(10):
+            ret[i,y[i]-1]=1
+        return ret
 
+    def prepare(self):
+        totalCount = self.data.shape[0]
+        trainCount = math.floor(totalCount * 0.75)
+
+        n = 10 #采样数，根据前n组结果，猜这次的结果
+        data = self.data.reshape(-1)
+        trainX = np.array([])
+        trainY = np.array([])
+        for i in range(n,trainCount):
+            x = data[(i-10)*10:i*10]
+            y = data[i*10:(i+1)*10]
+            trainX = np.append(trainX,x)
+            trainY = np.append(trainY,y)
+        
+        self.trainX = trainX.reshape(-1,10*n)
+        self.trainY = trainY.reshape(-1,10)
+
+        testX = np.array([])
+        testY = np.array([])
+        for i in range(trainCount,totalCount):
+            x = data[(i-10)*10:i*10]
+            y = data[i*10:(i+1)*10]
+            testX = np.append(testX,x)
+            testY = np.append(testY,y)
+        
+        self.testX = testX.reshape(-1,10*n)
+        self.testY = testY.reshape(-1,10)
 
 if __name__=='__main__':
     data = Data()
@@ -58,7 +91,18 @@ if __name__=='__main__':
     # data.save('2020-08.npy')
     # data.balance()
 
-    a = np.load('2020-08.npy')
-    print(a.shape)
-    b = 499+491+454+502+467+539+443+506+544+460
-    print(b)
+    # a = np.load('2020-08.npy')
+    # print(a.shape)
+    # b = 499+491+454+502+467+539+443+506+544+460
+    # print(b)
+
+    # data.data = np.arange(400).reshape(-1,10)
+    # data.prepare()
+    # print(data.testX[0:3])
+    # print(data.testY[0:3])
+
+    y = np.arange(1,11)
+    print(y)
+    np.random.shuffle(y)
+    print(y)
+    print(data.y(y))
