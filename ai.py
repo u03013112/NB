@@ -29,7 +29,7 @@ class AI:
         return
     def test(self,x,y):
         model = keras.models.load_model('my_model.h5')
-        print(x.shape)
+        # print(x.shape)
         ret = model.predict(x)
         ret = np.around(ret, decimals=2)
         ret = ret.reshape(-1,10,10)
