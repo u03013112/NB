@@ -76,12 +76,12 @@ class Data:
         testY = np.array([])
         for i in range(trainCount,totalCount):
             x = data[(i-10)*10:i*10]
-            y = data[i*10:(i+1)*10]
+            y = self.y(data[i*10:(i+1)*10])
             testX = np.append(testX,x)
             testY = np.append(testY,y)
         
         self.testX = testX.reshape(-1,10*n)
-        self.testY = testY.reshape(-1,10)
+        self.testY = testY.reshape(-1,100)
         print('prepared ok')
 
 if __name__=='__main__':

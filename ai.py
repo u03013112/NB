@@ -33,16 +33,25 @@ class AI:
         ret = model.predict(x)
         ret = np.around(ret, decimals=2)
         ret = ret.reshape(-1,10,10)
-        print(ret[0])
-        print(y[0].reshape(-1,10))
+        y = y.reshape(-1,10,10)
 
-        print(ret[1])
-        print(y[1].reshape(-1,10))
+        p = 0.8
+        cost = 0 
+        come = 0
+        print("count:",y.shape[0])
 
-        print(ret[2])
-        print(y[2].reshape(-1,10))
-
+        for i in range(ret.shape[0]):
+            r0 = ret[i].reshape(-1)
+            r1 = y[i].reshape(-1)
+            for j in range(r0.shape[0]):
+                if r0[j] > p:
+                    cost = cost + 1
+                    if r1[j] == 1:
+                        come = come + 9.9
         
+        print("totoal cost:",cost)
+        print("totoal come:",come)
+        print(come-cost)
         return
 
 if __name__=='__main__':
