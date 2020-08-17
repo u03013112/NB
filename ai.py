@@ -17,14 +17,14 @@ class AI:
                 keras.layers.Dense(100, activation="sigmoid"),
             ]
         )
-        model.compile(loss='categorical_crossentropy',optimizer='RMSprop')
+        model.compile(loss='categorical_crossentropy',optimizer='sgd')
         # model.summary()
         self.model = model
         
     def train(self,x,y):
         # print(x[0:3])
         # print(y[0:3])
-        self.model.fit(x, y, epochs=500, batch_size=16)
+        self.model.fit(x, y, epochs=200, batch_size=16)
         self.model.save('my_model.h5')
         return
     def test(self,x,y):
@@ -33,7 +33,15 @@ class AI:
         ret = model.predict(x)
         ret = np.around(ret, decimals=2)
         ret = ret.reshape(-1,10,10)
-        print(ret[0:3])
+        print(ret[0])
+        print(y[0].reshape(-1,10))
+
+        print(ret[1])
+        print(y[1].reshape(-1,10))
+
+        print(ret[2])
+        print(y[2].reshape(-1,10))
+
         
         return
 
@@ -48,8 +56,8 @@ if __name__=='__main__':
     # np.save('x.npy', data.testX)
     # np.save('y.npy', data.testY)
 
-    x = np.load('tx.npy')
-    y = np.load('ty.npy')
+    x = np.load('x.npy')
+    y = np.load('y.npy')
     ai = AI(10)
-    ai.train(x,y)
-    # ai.test(x,y)
+    # ai.train(x,y)
+    ai.test(x,y)
