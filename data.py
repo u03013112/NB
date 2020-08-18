@@ -6,13 +6,18 @@ class Data:
     def get(self,startdate,enddate):
         url = "https://sbmm1.onestalk.com/share/ajax/GetLotteryResults.aspx"
         body = {'gType':'156','startdate':startdate,'enddate':enddate,'search':2}
-        headers = {'Cookie':'visid_incap_2029550=hGd+MMXbTomBPGG11gpesHmjK18AAAAAQUIPAAAAAAA0hAYgF7M8V0mjOx7y2ejd; visid_incap_2284640=yRswnQSjS4OZ8Yeg4wxkg3mjK18AAAAAQUIPAAAAAACtDu70GgPVGFAYFmlTkrQ5; ASP.NET_SessionId=dbzec4o5g5gzcg1atmrvneau; visid_incap_1291906=wLPQllFMSuuOu1dW4zRTh6F0Ml8AAAAAQUIPAAAAAAAzgGRD0qwOcjuqZw9P0mRI; visid_incap_2029546=5qVkmx5USPGElFdyDncBR6V0Ml8AAAAAQUIPAAAAAAC0cfFzfJJ/4ERCTCpI2XCC; visid_incap_2061726=YOD3c0usRsGqa6q1j6/rC6V0Ml8AAAAAQUIPAAAAAAAC+RmEtUCq1Vcqyfqy+L1T; incap_ses_628_2029546=IOmtFFPYJArC1PgrwRq3CG2PM18AAAAAcn1MHcsa96iyeO8AKUCDLQ==; incap_ses_628_2061726=c33RFzsJ7AqT1/grwRq3CG2PM18AAAAAYvVPV+/o4wMglJxxsWyAQg==; visid_incap_2155316=5jyWu9ceRf2wW7n88MGWJiIRNl8AAAAAQUIPAAAAAAAPx+iVg8ln6eed0W2fWMAg; incap_ses_628_2155316=U5qDaQqv8gJXQ2o6wRq3CCIRNl8AAAAAj/nVgdY2qJITcu8/CS/x1w==; incap_ses_1222_1291906=zdZbL3++/k/qixTalmr1EAVgNl8AAAAA51C4QQDiF0A9djVYPZpwUQ==; incap_ses_628_2284640=sQ9QP0tlDTEI8ac8wRq3CAtgNl8AAAAAQe+yBqy+2lwIlgrK565eSg==; incap_ses_628_2029550=MIYrNHeyCU5R86c8wRq3CA1gNl8AAAAATzQ6vk2VQc0BSH4gSOrT0A==; visid_incap_2130188=aQtH+9NIRLGfkMHX3nCH1sFgNl8AAAAAQUIPAAAAAADM1VJxXNODl+AQW+fyjXgW; incap_ses_628_2130188=0IdHEUhrr0xnCKk8wRq3CMFgNl8AAAAA/3G4xsRgdZtr7aMsAsVP6A==; visid_incap_2029537=dxa86zT1T9uprtU6BFtvkssqOl8AAAAAQUIPAAAAAAAElNlZ9/jJOGDiZMFgAdQ3; incap_ses_1205_2029537=pYflFdOyUFMB4UjuLQW5EMsqOl8AAAAA5NZde0OajFhmreppSAwMOw==; visid_incap_2155285=9dtmo9ZLTP++I7J8Rxp2ac0qOl8AAAAAQUIPAAAAAAC4GdSngJGB3AiY3gE8D7sy; incap_ses_1205_2155285=bcx2OKaHIl9v40juLQW5EM0qOl8AAAAAMYbJGG+pNWRi52wF1URgGA=='}
+        headers = {'Cookie':'ASP.NET_SessionId=pbet31czrfg201e31pps2z2v'}
         try:
             r = requests.post(url,body, headers = headers)
         except requests.exceptions.RequestException as e:
             print(e)
             return
         # print(r.json())
+        if r.json().get('status') == 'Msg_Logout':
+            print('need login')
+            return
+        else:
+            print('got',len(r.json()),'data')
         dataNp = np.array([])
         data = r.json()
         for k in range(len(data)-1,-1,-1):
@@ -87,7 +92,7 @@ class Data:
 if __name__=='__main__':
     data = Data()
 
-    # data.get('2020-08-3','2020-08-3')
+    data.get('2020-08-18','2020-08-18')
     # data.save('2020-08-3.npy')
     # data.balance()
 
@@ -100,11 +105,11 @@ if __name__=='__main__':
     # b = 499+491+454+502+467+539+443+506+544+460
     # print(b)
 
-    data.load('2020-08-3.npy')
+    # data.load('2020-08-3.npy')
     # print(data.data[0:3])
-    data.prepare()
-    print(data.trainX[0:3])
-    print(data.trainY[0:3])
+    # data.prepare()
+    # print(data.trainX[0:3])
+    # print(data.trainY[0:3])
     # print(data.testX[0:3])
     # print(data.testY[0:3])
 
