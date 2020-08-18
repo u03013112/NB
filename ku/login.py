@@ -33,7 +33,7 @@ class Login:
             print(driver.title)
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'loginbutton')))
             driver.find_element_by_id("loginbutton").click()
-            # driver.get_screenshot_as_file('01.png')
+            driver.get_screenshot_as_file('01.png')
             print('accountId ...')
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'accountId')))
             username = driver.find_element_by_id("accountId")
@@ -45,9 +45,9 @@ class Login:
             print('signin ...')
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'signin')))
             loginButton = driver.find_element_by_id("signin").click()
-            # driver.get_screenshot_as_file('02.png')
+            driver.get_screenshot_as_file('02.png')
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'UserMenu')))
-            # driver.get_screenshot_as_file('03.png')
+            driver.get_screenshot_as_file('03.png')
         except BaseException as msg:
             print("error:",msg)
             self.exit()
@@ -63,18 +63,18 @@ class Login:
             ac.move_to_element(cp)
             ac.perform()
             time.sleep(2)
-            driver.get_screenshot_as_file('04.png')
+            # driver.get_screenshot_as_file('04.png')
 
             wait(driver,100).until(EC.visibility_of_element_located((By.ID,'BB_Ball_loto_maintain')))
             driver.find_element_by_id("BB_Ball_loto_maintain").click()
             wait(driver,100).until(EC.visibility_of_element_located((By.XPATH,"//div[@class='fancybox-skin']//input[@class='FT_button_w50L']")))
             wait(driver,100).until(EC.element_to_be_clickable((By.XPATH,"//div[@class='fancybox-skin']//input[@class='FT_button_w50L']")))
 
-            driver.get_screenshot_as_file('05.png')
+            # driver.get_screenshot_as_file('05.png')
             btn = driver.find_element_by_xpath("//div[@class='fancybox-skin']//input[@class='FT_button_w50L']")
             
             btn.click()
-            driver.get_screenshot_as_file('06.png')
+            # driver.get_screenshot_as_file('06.png')
             handles = driver.window_handles
             print("handles1:",handles)  # 输出句柄集合
             driver.switch_to.window(handles[-1])
@@ -90,6 +90,7 @@ class Login:
         except BaseException as msg:
             print("error:",msg)
             self.exit()
+        return ""
     def getCookies(self):
         l = Login()
         l.init()
