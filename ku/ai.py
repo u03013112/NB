@@ -27,7 +27,7 @@ class AI:
                 keras.layers.Dense(10, activation="softmax"),
             ]
         )
-        model.compile(loss='categorical_crossentropy',optimizer='SGD')
+        model.compile(loss='categorical_crossentropy',optimizer='RMSprop')
         return model    
     def train(self,trainX,trainY,testX,testY):
         early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=50, verbose=2)
@@ -41,7 +41,7 @@ class AI:
         ret = ret.reshape(-1,10)
         y = testY.reshape(-1,10)
         print( np.around(ret[0:10], decimals=2))
-        p = 0.95
+        p = 0.105
         cost = 0 
         come = 0
         print("count:",y.shape[0])
