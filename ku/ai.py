@@ -19,29 +19,20 @@ class AI:
                 keras.layers.Dense(512, activation="relu"),
                 keras.layers.Dropout(0.2),
                 keras.layers.Dense(512, activation="relu"),
-                keras.layers.Dropout(0.1),
+                keras.layers.Dropout(0.2),
                 keras.layers.Dense(512, activation="relu"),
-                keras.layers.Dropout(0.1),
+                keras.layers.Dropout(0.2),
                 keras.layers.Dense(512, activation="relu"),
-                keras.layers.Dropout(0.1),
-                keras.layers.Dense(512, activation="relu"),
-                keras.layers.Dropout(0.1),
-                keras.layers.Dense(512, activation="relu"),
-                keras.layers.Dropout(0.1),
-                keras.layers.Dense(512, activation="relu"),
-                keras.layers.Dropout(0.1),
-                keras.layers.Dense(512, activation="relu"),
-                keras.layers.Dropout(0.1),
-                keras.layers.Dense(512, activation="relu"),
-                keras.layers.Dropout(0.1),
+                keras.layers.Dropout(0.2),
                 keras.layers.Dense(10, activation="softmax"),
             ]
         )
-        model.compile(loss='categorical_crossentropy',optimizer='RMSprop',metrics=['accuracy'])
+        model.compile(loss='categorical_crossentropy',optimizer='SGD')
         return model    
     def train(self,trainX,trainY,testX,testY):
         early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=50, verbose=2)
-        self.model.fit(trainX, trainY, epochs=100, batch_size=8,validation_data=(testX, testY),callbacks=[early_stopping])
+        # self.model.fit(trainX, trainY, epochs=100, batch_size=8,validation_data=(testX, testY),callbacks=[early_stopping])
+        self.model.fit(trainX, trainY, epochs=50, batch_size=16,validation_data=(testX, testY))
         self.model.save(self.filename)
         return
     def test(self,testX, testY):
@@ -49,8 +40,8 @@ class AI:
         ret = model.predict(testX)
         ret = ret.reshape(-1,10)
         y = testY.reshape(-1,10)
-        print(ret[0:10])
-        p = 0.11
+        print( np.around(ret[0:10], decimals=2))
+        p = 0.95
         cost = 0 
         come = 0
         print("count:",y.shape[0])
