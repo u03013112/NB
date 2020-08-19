@@ -49,7 +49,7 @@ class Login:
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'UserMenu')))
             # driver.get_screenshot_as_file('03.png')
         except BaseException as msg:
-            print("error:",msg)
+            print("error0:",msg)
             # self.exit()
     def intoCaiPiao(self):
         driver = self.driver
@@ -88,7 +88,7 @@ class Login:
             print(cookiestr)
             return cookiestr
         except BaseException as msg:
-            print("error:",msg)
+            print("error1:",msg)
             # self.exit()
         return ""
     def getCookies(self):
