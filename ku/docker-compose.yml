@@ -1,5 +1,14 @@
 version: '3.7'
 services: 
+  ku-spider:
+    image: u03013112/ku_spiter
+    container_name: ku-spider
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
   selenium-hub:
     image: selenium/hub:3.141.59-yttrium
     container_name: selenium-hub

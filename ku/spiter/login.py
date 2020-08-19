@@ -13,8 +13,8 @@ class Login:
         # option.set_preference('permissions.default.image', 2)
         # option.set_preference('permissions.default.stylesheet',2)
         self.driver = webdriver.Remote(
-            # command_executor="http://selenium-hub:4444/wd/hub",
-            command_executor="http://127.0.0.1:4444/wd/hub",
+            command_executor="http://selenium-hub:4444/wd/hub",
+            # command_executor="http://127.0.0.1:4444/wd/hub",
             options=option,
             desired_capabilities=DesiredCapabilities.FIREFOX
         )
@@ -33,7 +33,7 @@ class Login:
             print(driver.title)
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'loginbutton')))
             driver.find_element_by_id("loginbutton").click()
-            driver.get_screenshot_as_file('01.png')
+            # driver.get_screenshot_as_file('01.png')
             print('accountId ...')
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'accountId')))
             username = driver.find_element_by_id("accountId")
@@ -45,16 +45,16 @@ class Login:
             print('signin ...')
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'signin')))
             loginButton = driver.find_element_by_id("signin").click()
-            driver.get_screenshot_as_file('02.png')
+            # driver.get_screenshot_as_file('02.png')
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'UserMenu')))
-            driver.get_screenshot_as_file('03.png')
+            # driver.get_screenshot_as_file('03.png')
         except BaseException as msg:
             print("error:",msg)
-            self.exit()
+            # self.exit()
     def intoCaiPiao(self):
         driver = self.driver
         handles = driver.window_handles
-        print("handles0:",handles)  # 输出句柄集合
+        # print("handles0:",handles)  # 输出句柄集合
         try:
             wait(driver,100).until(EC.visibility_of_element_located((By.LINK_TEXT,'彩票游戏')))
             cp = driver.find_element_by_link_text("彩票游戏")
@@ -76,10 +76,10 @@ class Login:
             btn.click()
             # driver.get_screenshot_as_file('06.png')
             handles = driver.window_handles
-            print("handles1:",handles)  # 输出句柄集合
+            # print("handles1:",handles)  # 输出句柄集合
             driver.switch_to.window(handles[-1])
             print(driver.title)
-            print(driver.current_window_handle)
+            # print(driver.current_window_handle)
             wait(driver,100).until(EC.title_is('全球彩票'))
             listCookies = driver.get_cookies()
             print(listCookies)
@@ -89,7 +89,7 @@ class Login:
             return cookiestr
         except BaseException as msg:
             print("error:",msg)
-            self.exit()
+            # self.exit()
         return ""
     def getCookies(self):
         l = Login()
