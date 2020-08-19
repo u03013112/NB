@@ -46,6 +46,7 @@ class Spider:
         return ret
     
 if __name__=='__main__':
+    print('start')
     ticks = time.time()-15*24*3600
     t15daysAge = time.strftime("%Y-%m-%d",time.localtime(ticks))
     today = time.strftime("%Y-%m-%d", time.localtime())

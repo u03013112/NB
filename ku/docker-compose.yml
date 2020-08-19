@@ -4,6 +4,7 @@ services:
     image: u03013112/ku_spiter
     container_name: ku-spider
     restart: always
+    tty: true
     logging:
       driver: "json-file"
       options:
