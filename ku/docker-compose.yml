@@ -24,11 +24,12 @@ services:
     command: --character-set-server=utf8 --collation-server=utf8_general_ci
     volumes:
       - .data/mysql:/var/lib/mysql
+      - ./mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     container_name: 'mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=!@#sspaas@U0
       - MYSQL_DATABASE=ku
     restart: always
     ports:
-      - 3306:3306
+      - 127.0.0.1:3306:3306
 
