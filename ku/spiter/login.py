@@ -13,8 +13,8 @@ class Login:
         # option.set_preference('permissions.default.image', 2)
         # option.set_preference('permissions.default.stylesheet',2)
         self.driver = webdriver.Remote(
-            # command_executor="http://selenium-hub:4444/wd/hub",
-            command_executor="http://127.0.0.1:4444/wd/hub",
+            command_executor="http://selenium-hub:4444/wd/hub",
+            # command_executor="http://127.0.0.1:4444/wd/hub",
             options=option,
             desired_capabilities=DesiredCapabilities.FIREFOX
         )

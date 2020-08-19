@@ -4,7 +4,7 @@ import pymysql
 class DB:
     def connect(self):
         conn = pymysql.connect(
-            host="127.0.0.1",
+            host="mysql",
             user="root",
             password="!@#sspaas@U0",
             database="ku",
