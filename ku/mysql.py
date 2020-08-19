@@ -53,7 +53,7 @@ class DB:
                 sql = "INSERT IGNORE INTO `car`(`id` ,`date`,`d1` ,`d2` ,`d3` ,`d4` ,`d5` ,`d6` ,`d7` ,`d8` ,`d9` ,`d10`)\
                     VALUES (%d,\'%s\',%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)" % \
                     (data['id'],data['date'],data['d1'],data['d2'],data['d3'],data['d4'],data['d5'],data['d6'],data['d7'],data['d8'],data['d9'],data['d10'])
-                print(sql)
+                # print(sql)
                 self.cursor.execute(sql)
             self.conn.commit() # 事务提交
             print('事务处理成功', self.cursor.rowcount)# 关闭连接

@@ -63,18 +63,18 @@ class Login:
             ac.move_to_element(cp)
             ac.perform()
             time.sleep(2)
-            driver.get_screenshot_as_file('04.png')
+            # driver.get_screenshot_as_file('04.png')
 
             wait(driver,100).until(EC.visibility_of_element_located((By.ID,'BB_Ball_loto_maintain')))
             driver.find_element_by_id("BB_Ball_loto_maintain").click()
             wait(driver,100).until(EC.visibility_of_element_located((By.XPATH,"//div[@class='fancybox-skin']//input[@class='FT_button_w50L']")))
             wait(driver,100).until(EC.element_to_be_clickable((By.XPATH,"//div[@class='fancybox-skin']//input[@class='FT_button_w50L']")))
 
-            driver.get_screenshot_as_file('05.png')
+            # driver.get_screenshot_as_file('05.png')
             btn = driver.find_element_by_xpath("//div[@class='fancybox-skin']//input[@class='FT_button_w50L']")
             
             btn.click()
-            driver.get_screenshot_as_file('06.png')
+            # driver.get_screenshot_as_file('06.png')
             handles = driver.window_handles
             # print("handles1:",handles)  # 输出句柄集合
             driver.switch_to.window(handles[-1])
