@@ -3,7 +3,9 @@ import requests
 import numpy as np
 import math
 from login import Login
-class Data:
+from mysql import DB
+import time
+class Spider:
     def __init__(self):
         self.cookie = Login().getCookies()
     def get(self,startdate,enddate):
@@ -44,7 +46,22 @@ class Data:
         return ret
     
 if __name__=='__main__':
-    data = Data()
-    ret = data.get('2020-08-18','2020-08-18')
-    print(ret)
+    ticks = time.time()-15*24*3600
+    t15daysAge = time.strftime("%Y-%m-%d",time.localtime(ticks))
+    today = time.strftime("%Y-%m-%d", time.localtime())
+
+    db = DB()
+    db.createDBAndTable()
+
+    sp = Spider()
+    #先获取15天之内的所有内容
+    ret =  sp.get(t15daysAge,today)
+    db.insert(ret)
+
+    while (True):
+        time.sleep(60)
+        today = time.strftime("%Y-%m-%d", time.localtime())
+        ret =  sp.get(today,today)
+        db.insert(ret)    
+    
     
