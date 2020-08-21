@@ -70,6 +70,33 @@ class DB:
             print('getLatest失败', e)
         self.disconnected()
         return ret
+    def getAll(self):
+        ret = []
+        self.connect()
+        try:
+            sql = "SELECT * FROM `car` ORDER BY `id` ASC"
+            print(sql)
+            self.cursor.execute(sql)
+            results = self.cursor.fetchall()
+            for row in results:
+                r = {}
+                r['gid'] = row[0]
+                r['date'] = row[1]
+                r['d1'] = row[2]
+                r['d2'] = row[3]
+                r['d3'] = row[4]
+                r['d4'] = row[5]
+                r['d5'] = row[6]
+                r['d6'] = row[7]
+                r['d7'] = row[8]
+                r['d8'] = row[9]
+                r['d9'] = row[10]
+                r['d10'] = row[11]
+                ret.append(r)
+        except Exception as e:
+            print('getAll', e)
+        self.disconnected()
+        return ret
 
 if __name__=='__main__':
     db = DB()
