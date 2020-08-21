@@ -69,4 +69,5 @@ if __name__=='__main__':
 
     ai = AI(n,'model.h5')
     # ai.train(p.trainX,p.trainY,p.testX,p.testY)
-    ai.test(p.testX,p.testY)
+    # ai.test(p.testX,p.testY)
+    ai.test(p.x,p.y)

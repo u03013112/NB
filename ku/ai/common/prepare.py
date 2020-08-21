@@ -28,6 +28,8 @@ class Prepare:
         self.trainY = yArray[0:trainCount]
         self.testX = xArray[trainCount:]
         self.testY = yArray[trainCount:]
+        self.x = xArray
+        self.y = yArray
         print('prepared ok')
 
 if __name__=='__main__':
