@@ -64,7 +64,8 @@ if __name__=='__main__':
     n = 40
     p = Prepare()
     data = Data()
-    data.getAll()
+    # data.getAll()
+    data.getLatest(1000)
     p.prepare(data.data,n,0)
 
     ai = AI(n,'model.h5')
