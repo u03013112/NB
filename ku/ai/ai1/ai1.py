@@ -18,9 +18,11 @@ class AI:
         model = keras.Sequential(
             [
                 keras.Input(shape=(n*10)),
-                keras.layers.Dense(1024, activation="relu"),
+                keras.layers.Dense(512, activation="relu"),
                 keras.layers.Dropout(0.3),
-                keras.layers.Dense(1024, activation="relu"),
+                keras.layers.Dense(512, activation="relu"),
+                keras.layers.Dropout(0.3),
+                keras.layers.Dense(512, activation="relu"),
                 keras.layers.Dropout(0.3),
                 keras.layers.Dense(10, activation="softmax"),
             ]
@@ -36,7 +38,7 @@ class AI:
             # monitor='val_acc',
             # mode='max',
             save_best_only=True)
-        self.model.fit(trainX, trainY, epochs=200, batch_size=16,validation_data=(testX, testY),callbacks=[model_checkpoint_callback])
+        self.model.fit(trainX, trainY, epochs=50, batch_size=16,validation_data=(testX, testY),callbacks=[model_checkpoint_callback])
         # self.model.save(self.filename)
         return
     def test(self,testX, testY):
@@ -79,7 +81,7 @@ class AI:
 
         # p = 0.4
         for i in range(1,10):
-            p = i*0.1
+            p = 0.1+i*0.01
             cost = 0 
             come = 0
             print("count:",y.shape[0])
@@ -99,14 +101,16 @@ class AI:
         return
 
 if __name__=='__main__':
-    n = 40
+    n = 80
     p = Prepare()
     data = Data()
-    data.getAll()
-    # data.getLatest(1000)
-    p.prepare(data.data,n,1)
-
     ai = AI(n,'model.h5')
-    ai.train(p.trainX,p.trainY,p.testX,p.testY)
-    ai.test(p.testX,p.testY)
-    # ai.test(p.x,p.y)
+
+    # data.getAll()
+    # p.prepare(data.data,n,1)
+    # ai.train(p.trainX,p.trainY,p.testX,p.testY)
+    # ai.test(p.testX,p.testY)
+
+    data.getLatest(1000)
+    p.prepare(data.data,n,1)
+    ai.test(p.x,p.y)

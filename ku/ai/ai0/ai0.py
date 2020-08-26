@@ -32,7 +32,7 @@ class AI:
     def train(self,trainX,trainY,testX,testY):
         early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=50, verbose=2)
         # self.model.fit(trainX, trainY, epochs=100, batch_size=8,validation_data=(testX, testY),callbacks=[early_stopping])
-        self.model.fit(trainX, trainY, epochs=50, batch_size=16,validation_data=(testX, testY))
+        self.model.fit(trainX, trainY, epochs=30, batch_size=16,validation_data=(testX, testY))
         self.model.save(self.filename)
         return
     def test(self,testX, testY):
@@ -41,7 +41,7 @@ class AI:
         ret = ret.reshape(-1,10)
         y = testY.reshape(-1,10)
         print( np.around(ret[0:10], decimals=2))
-        p = 0.4
+        p = 0.101
         cost = 0 
         come = 0
         print("count:",y.shape[0])
@@ -59,16 +59,34 @@ class AI:
         print("totoal come:",come)
         print(come-cost)
         return
+    def load(self):
+        self.model = keras.models.load_model(self.filename)
+    def predict(self,data40):
+        data = data40.reshape(-1,400)
+        ret = self.model.predict(data)
+        ret = ret.reshape(-1)
+        # print(ret)
+        a = []
+        for i in range(ret.shape[0]):
+            if ret[i] > 0.101:
+                a.append(i+1)
+        return a
 
 if __name__=='__main__':
     n = 40
     p = Prepare()
     data = Data()
-    # data.getAll()
-    data.getLatest(1000)
-    p.prepare(data.data,n,0)
-
     ai = AI(n,'model.h5')
+
+    # data.getAll()
+    # p.prepare(data.data,n,1)
     # ai.train(p.trainX,p.trainY,p.testX,p.testY)
     # ai.test(p.testX,p.testY)
+
+    data.getLatest(200)
+    p.prepare(data.data,n,0)
     ai.test(p.x,p.y)
+
+    # data.getLatest(40)
+    # r = ai.predict(data.data)
+    # print(r)

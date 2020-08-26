@@ -13,6 +13,7 @@ class Data:
             dataNp = np.append(dataNp,[v['d1'],v['d2'],v['d3'],v['d4'],v['d5'],v['d6'],v['d7'],v['d8'],v['d9'],v['d10']])
         dataNp = dataNp.reshape(-1,10)
         self.data = dataNp
+        return data
     def getLatest(self,n):
         db = DB()
         data = db.getLatest(n)
@@ -22,6 +23,17 @@ class Data:
             dataNp = np.append(dataNp,[v['d1'],v['d2'],v['d3'],v['d4'],v['d5'],v['d6'],v['d7'],v['d8'],v['d9'],v['d10']])
         dataNp = dataNp.reshape(-1,10)
         self.data = dataNp
+        return data
+    def getLatestP(self,n):
+        db = DB()
+        data = db.getLatestP(n)
+        # data = db.getLatest(10)
+        dataNp = np.array([])
+        for v in data:
+            dataNp = np.append(dataNp,[v['d1'],v['d2'],v['d3'],v['d4'],v['d5'],v['d6'],v['d7'],v['d8'],v['d9'],v['d10']])
+        dataNp = dataNp.reshape(-1,10)
+        self.data = dataNp
+        return data
     def save(self,filename):
         np.save(filename,self.data)
     def load(self,filename):
