@@ -29,7 +29,7 @@ class AI:
         )
         model.compile(loss='categorical_crossentropy',optimizer='sgd',metrics=['accuracy'])
         return model    
-    def train(self,trainX,trainY,testX,testY):
+    def train(self,trainX,trainY):
         # early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=50, verbose=2)
         # self.model.fit(trainX, trainY, epochs=100, batch_size=8,validation_data=(testX, testY),callbacks=[early_stopping])
         model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
@@ -38,7 +38,7 @@ class AI:
             monitor='val_accuracy',
             mode='max',
             save_best_only=True)
-        self.model.fit(trainX, trainY, epochs=30, batch_size=16,validation_split=0.2,callbacks=[model_checkpoint_callback])
+        self.model.fit(trainX, trainY, epochs=30, batch_size=16,validation_split=0.4,callbacks=[model_checkpoint_callback])
         # self.model.save(self.filename)
         return
     def test(self,testX, testY):
@@ -77,6 +77,7 @@ class AI:
 
 if __name__=='__main__':
     n = 40
+   
     p = Prepare()
     data = Data()
     
@@ -84,20 +85,19 @@ if __name__=='__main__':
     total = 0.0
     for i in range(10):
         retStr += '\n第'+str(i+1)+'名:\n'
+        print(retStr)
         ai = AI(n,'model'+str(i)+'.h5')
         data.getAll()
         p.prepare(data.data,n,i)
-        ai.train(p.trainX,p.trainY,p.testX,p.testY)
-        s,n = ai.test(p.testX,p.testY)
+        ai.train(p.trainX,p.trainY)
+        s,nu = ai.test(p.testX,p.testY)
         retStr += s + "\n"
-        total += n
+        total += nu
 
     print(retStr)
-    print('\n总结果：'+n)
+    print('\n总结果：'+nu)
+
     # data.getLatest(200)
     # p.prepare(data.data,n,0)
     # ai.test(p.x,p.y)
 
-    # data.getLatest(40)
-    # r = ai.predict(data.data)
-    # print(r)
