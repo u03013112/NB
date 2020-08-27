@@ -34,11 +34,11 @@ class AI:
         # self.model.fit(trainX, trainY, epochs=100, batch_size=8,validation_data=(testX, testY),callbacks=[early_stopping])
         model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
             filepath=self.filename,
-            # save_weights_only=True,
-            # monitor='val_acc',
-            # mode='max',
+            verbose=1,
+            monitor='val_accuracy',
+            mode='max',
             save_best_only=True)
-        self.model.fit(trainX, trainY, epochs=50, batch_size=16,validation_data=(testX, testY),callbacks=[model_checkpoint_callback])
+        self.model.fit(trainX, trainY, epochs=50, batch_size=16,validation_split=0.2,callbacks=[model_checkpoint_callback])
         # self.model.save(self.filename)
         return
     def test(self,testX, testY):
@@ -46,71 +46,54 @@ class AI:
         ret = model.predict(testX)
         ret = ret.reshape(-1,10)
         y = testY.reshape(-1,10)
-        # print( np.around(ret[0:10], decimals=2))
-
-        a = ret.reshape(-1)
-        a.sort()
-        a1 = a[a<0.1]
-        a = a[a>=0.1]
-        print("0.1:",a1.shape[0])
-        a2 = a[a<0.2]
-        a = a[a>=0.2]
-        print("0.2:",a2.shape[0])
-        a3 = a[a<0.3]
-        a = a[a>=0.3]
-        print("0.3:",a3.shape[0])
-        a4 = a[a<0.4]
-        a = a[a>=0.4]
-        print("0.4:",a4.shape[0])
-        a5 = a[a<0.5]
-        a = a[a>=0.5]
-        print("0.5:",a5.shape[0])
-        a6 = a[a<0.6]
-        a = a[a>=0.6]
-        print("0.6:",a6.shape[0])
-        a7 = a[a<0.7]
-        a = a[a>=0.7]
-        print("0.7:",a7.shape[0])
-        a8 = a[a<0.8]
-        a = a[a>=0.8]
-        print("0.8:",a8.shape[0])
-        a9 = a[a<0.9]
-        a = a[a>=0.9]
-        print("0.9:",a9.shape[0])
         
+        cost = 0 
+        come = 0
+        retStr = "count:"+str(y.shape[0]) + "\n"
 
-        # p = 0.4
-        for i in range(1,10):
-            p = 0.1+i*0.01
-            cost = 0 
-            come = 0
-            print("count:",y.shape[0])
-
-            for i in range(ret.shape[0]):
-                r0 = ret[i].reshape(-1)
-                r1 = y[i].reshape(-1)
-                for j in range(r0.shape[0]):
-                    if r0[j] > p:
-                        cost = cost + 1
-                        if r1[j] == 1:
-                            come = come + 9.9
-            print("p=",p)
-            print("totoal cost:",cost)
-            print("totoal come:",come)
-            print("totoal profit:",come-cost)
-        return
+        for i in range(ret.shape[0]):
+            cost += 2
+            r0 = np.argmax(ret[i])
+            r1 = np.argmax(y[i])
+            if r0 == r1:
+                come += 9.9*2
+        retStr += "totoal cost:" + str(cost) + "\n"
+        retStr += "totoal come:" + str(come) + "\n"
+        retStr += "totoal profit:" + str(come-cost) + "\n"
+        print(retStr)
+        return retStr
+    def load(self):
+        self.model = keras.models.load_model(self.filename)
+    def predict(self,data40):
+        data = data40.reshape(-1,400)
+        ret = self.model.predict(data)
+        ret = ret.reshape(-1)
+        # print(ret)
+        a = []
+        for i in range(ret.shape[0]):
+            if ret[i] > 0.101:
+                a.append(i+1)
+        return a
 
 if __name__=='__main__':
-    n = 80
+    n = 40
     p = Prepare()
     data = Data()
-    ai = AI(n,'model.h5')
+    
+    retStr = ''
+    for i in range(10):
+        retStr += '\n第'+str(i+1)+'名:\n'
+        ai = AI(n,'model'+str(i)+'.h5')
+        data.getAll()
+        p.prepare(data.data,n,i)
+        ai.train(p.trainX,p.trainY,p.testX,p.testY)
+        retStr += ai.test(p.testX,p.testY) + "\n"
 
-    # data.getAll()
-    # p.prepare(data.data,n,1)
-    # ai.train(p.trainX,p.trainY,p.testX,p.testY)
-    # ai.test(p.testX,p.testY)
+    print(retStr)
+    # data.getLatest(200)
+    # p.prepare(data.data,n,0)
+    # ai.test(p.x,p.y)
 
-    data.getLatest(1000)
-    p.prepare(data.data,n,1)
-    ai.test(p.x,p.y)
+    # data.getLatest(40)
+    # r = ai.predict(data.data)
+    # print(r)
