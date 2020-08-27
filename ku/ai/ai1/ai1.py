@@ -71,6 +71,7 @@ class AI:
         data = data40.reshape(-1,400)
         ret = self.model.predict(data)
         ret = ret.reshape(-1)
+        print(ret)
         d = np.argmax(ret)+1
         return d
 

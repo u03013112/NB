@@ -15,6 +15,7 @@ class Go:
         data = Data()
         ret = []
         data.getLatest(self.n)
+        print(data.data)
         for i in range(10):
             ai = AI(self.n,'model'+str(i)+'.h5')
             a = ai.predict(data.data)
