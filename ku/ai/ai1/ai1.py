@@ -64,16 +64,16 @@ class AI:
         return retStr,come-cost
     def load(self):
         self.model = keras.models.load_model(self.filename)
+    def setFilename(self,filename):
+        self.filename = filename
     def predict(self,data40):
+        self.model = keras.models.load_model(self.filename)
         data = data40.reshape(-1,400)
         ret = self.model.predict(data)
         ret = ret.reshape(-1)
-        # print(ret)
-        a = []
-        for i in range(ret.shape[0]):
-            if ret[i] > 0.101:
-                a.append(i+1)
-        return a
+        d = np.argmax(ret)+1
+        return d
+
 
 if __name__=='__main__':
     n = 40
@@ -95,7 +95,7 @@ if __name__=='__main__':
         total += nu
 
     print(retStr)
-    print('\n总结果：'+nu)
+    print('\n总结果：'+str(total))
 
     # data.getLatest(200)
     # p.prepare(data.data,n,0)
