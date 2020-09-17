@@ -17,7 +17,7 @@ class Spider:
         except requests.exceptions.RequestException as e:
             print(e)
             return
-        print(r.text())
+        # print(r.text)
         if r.json().get('status') == 'Msg_Logout':
             print('need login')
             self.cookie = Login().getCookies()
