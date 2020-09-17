@@ -9,7 +9,7 @@ class Spider:
     def __init__(self):
         self.cookie = Login().getCookies()
     def get(self,startdate,enddate):
-        url = "https://sbmm1.onestalk.com/share/ajax/GetLotteryResults.aspx"
+        url = "https://sbccn.onestalk.com/share/ajax/GetLotteryResults.aspx"
         body = {'gType':'156','startdate':startdate,'enddate':enddate,'search':2}
         headers = {'Cookie':self.cookie}
         try:
@@ -17,7 +17,7 @@ class Spider:
         except requests.exceptions.RequestException as e:
             print(e)
             return
-        # print(r.json())
+        print(r.text())
         if r.json().get('status') == 'Msg_Logout':
             print('need login')
             self.cookie = Login().getCookies()

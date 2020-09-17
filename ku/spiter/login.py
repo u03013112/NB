@@ -28,7 +28,7 @@ class Login:
     def login(self):
         driver = self.driver
         try:
-            url = "https://ku.ku5168.com/?open=true"
+            url = "https://ku.ku9888.net"
             driver.get(url)
             print(driver.title)
             wait(driver,100).until(EC.presence_of_element_located((By.ID,'loginbutton')))
